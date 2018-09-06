@@ -25,6 +25,7 @@ namespace networkClientTestApp
         public MainPage()
         {
             this.InitializeComponent();
+            SimpleDownloader downloader = new SimpleDownloader();
         }
     }
 }
