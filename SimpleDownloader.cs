@@ -11,12 +11,8 @@ namespace networkClientTestApp
 {
     public class SimpleDownloader
     {
-        public SimpleDownloader()
-        {
-            initAsync();
-        }
 
-        private async Task initAsync()
+        public async Task initAsync()
         {
             // Define some variables and set values
             StreamSocket clientSocket = new StreamSocket();
@@ -53,7 +49,11 @@ namespace networkClientTestApp
             }
 
             // Add code to send and receive data using the clientSocket
-            // and then close the clientSocket
+
+
+            // Close the clientSocket
+            clientSocket.Dispose();
+            clientSocket = null;
         }
 
         private void NotifyUser(string v)

@@ -8,6 +8,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Button x:Name="Connect_" Content="Connect!" HorizontalAlignment="Left" Margin="134,235,0,0" VerticalAlignment="Top" Click="Connect__Click"/>
 
     </Grid>
 </Page>

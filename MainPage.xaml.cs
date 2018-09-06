@@ -22,10 +22,17 @@ namespace networkClientTestApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private SimpleDownloader downloader;
         public MainPage()
         {
             this.InitializeComponent();
-            SimpleDownloader downloader = new SimpleDownloader();
+            downloader = new SimpleDownloader();
+            
+        }
+
+        private async void Connect__Click(object sender, RoutedEventArgs e)
+        {
+            await this.downloader.initAsync();
         }
     }
 }
