@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Networking;
 using Windows.Networking.Sockets;
+using Windows.Storage.Streams;
 
 namespace networkClientTestApp
 {
@@ -14,51 +16,30 @@ namespace networkClientTestApp
 
         public async Task initAsync()
         {
-            // Define some variables and set values
-            StreamSocket clientSocket = new StreamSocket();
+            byte[] data;
+            string url = "https://www.microsoft.com";
+            Uri uri = new Uri(url);
 
-            HostName serverHost = new HostName("www.microsoft.com");
-            string serverServiceName = "https";
-
-            // For simplicity, the sample omits implementation of the
-            // NotifyUser method used to display status and error messages 
-
-            // Try to connect to contoso using HTTPS (port 443)
             try
             {
-
-                // Call ConnectAsync method with SSL
-                await clientSocket.ConnectAsync(serverHost, serverServiceName, SocketProtectionLevel.Ssl);
-
-                NotifyUser("Connected");
-            }
-            catch (Exception exception)
-            {
-                // If this is an unknown status it means that the error is fatal and retry will likely fail.
-                if (SocketError.GetStatus(exception.HResult) == SocketErrorStatus.Unknown)
+                HttpClient httpClient = new HttpClient();
+                HttpResponseMessage response = await httpClient.GetAsync(uri);
+                string mediaType = response.Content.Headers.ContentType.MediaType.Split('/')[1];
+                data = await response.Content.ReadAsByteArrayAsync();
+                foreach (var ch in data)
                 {
-                    throw;
+                    Debug.Write((char)ch);
                 }
-
-                NotifyUser("Connect failed with error: " + exception.Message);
-                // Could retry the connection, but for this simple example
-                // just close the socket.
-
-                clientSocket.Dispose();
-                clientSocket = null;
+                
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.Message);
             }
 
-            // Add code to send and receive data using the clientSocket
-
-
-            // Close the clientSocket
-            clientSocket.Dispose();
-            clientSocket = null;
         }
 
-        private void NotifyUser(string v)
-        {
-            Debug.WriteLine(v);
-        }
+
+
     }
 }
