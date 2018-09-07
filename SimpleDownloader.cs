@@ -7,17 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Networking;
 using Windows.Networking.Sockets;
-using Windows.Storage.Streams;
 
 namespace networkClientTestApp
 {
     public class SimpleDownloader
     {
 
-        public async Task initAsync()
+        public async Task downloadURLAsync(string url)
         {
             byte[] data;
-            string url = "https://www.microsoft.com";
             Uri uri = new Uri(url);
 
             try
@@ -26,11 +24,7 @@ namespace networkClientTestApp
                 HttpResponseMessage response = await httpClient.GetAsync(uri);
                 string mediaType = response.Content.Headers.ContentType.MediaType.Split('/')[1];
                 data = await response.Content.ReadAsByteArrayAsync();
-                foreach (var ch in data)
-                {
-                    Debug.Write((char)ch);
-                }
-                
+
             }
             catch(Exception e)
             {

@@ -32,7 +32,7 @@ namespace networkClientTestApp
 
         private async void Connect__Click(object sender, RoutedEventArgs e)
         {
-            await this.downloader.initAsync();
+            await this.downloader.downloadURLAsync(URL_.Text);
         }
     }
 }
